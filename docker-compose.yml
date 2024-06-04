@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:5
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: nest-pokemon
+    volumes:
+      - ./mongo:/data/db
+
+  fhir:
+    image: hapiproject/hapi:latest
+    ports:
+      - "8080:8080"
+    environment:
+      HAPI_FHIR_DB_HOST: fhir-db
+      HAPI_FHIR_DB_PORT: 5432
+      HAPI_FHIR_DB_NAME: hapi_r4
+      HAPI_FHIR_DB_USER: admin
+      HAPI_FHIR_DB_PASS: admin
